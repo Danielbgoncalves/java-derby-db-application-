@@ -27,7 +27,7 @@ public class PainelEstoque extends JPanel implements DialogMessageHelper {
 
         txtArea = new JTextArea();
         txtArea.setEditable(false);
-        JScrollPane scrollPane= new JScrollPane(txtArea);
+        JScrollPane scrollPane = new JScrollPane(txtArea);
 
         btnVoltar.addActionListener(e -> cl.show(cards, "Comprar"));
 
@@ -47,19 +47,17 @@ public class PainelEstoque extends JPanel implements DialogMessageHelper {
             list = produtoDAO.listProducts();
         } catch( SQLException e){
             DialogMessageHelper.dialogMessgae(mainFrame,"Erro ao buscar informações do servidor", "erro");
-            System.out.println("Erro ao buscar lista de Produto: " + e.getMessage());
             // função de pop up
         }
 
         if(list.isEmpty()){
-            System.out.println("A lista veio vazia");
             txtArea.append("""
-                    =================================================================
+                    ===================================================================
                     \t   No momento não há Produto no estoque,
                     \t   Compre algum na OLX JAVAlino e o veja no estoque !
                     \t   Dica: use o id mostrado aqui para te orientar na hora da venda
-                    \t   （￣︶￣）↗　
-                    =================================================================
+　
+                    ===================================================================
                     """);
         } else{
             for(Produto p: list)

@@ -42,10 +42,10 @@ public class PainelComprar extends JPanel implements DialogMessageHelper {
         Descricao.setBounds(30, 110, 100, 30);
         Qnt.setBounds(30, 140, 100, 30);
 
-        entradaNome.setBounds(130, 50, 200, 30);
-        entradaPreco.setBounds(130, 80, 200, 30);
-        entradaDescricao.setBounds(130, 110, 390, 30);
-        entradaQnt.setBounds(130, 140, 60, 30);
+        entradaNome.setBounds(100, 50, 200, 30);
+        entradaPreco.setBounds(100, 80, 200, 30);
+        entradaDescricao.setBounds(100, 110, 420, 30);
+        entradaQnt.setBounds(100, 140, 60, 30);
 
         btnComprar.setBounds(50, 200, 100, 30);
         btnVendas.setBounds(150, 200, 150, 30);
@@ -97,16 +97,13 @@ public class PainelComprar extends JPanel implements DialogMessageHelper {
             DialogMessageHelper.dialogMessgae(mainFrame,"Entrada com formato inválido", "erro");
             return;
         } catch (SQLException e) {
-            System.out.println("Erro no SQL");
             DialogMessageHelper.dialogMessgae(mainFrame, e.getMessage(), "erro");
-            // fazer função pra mostra pop up de erro no SQL
             return;
         } finally {
             limparCampos();
         }
 
         DialogMessageHelper.dialogMessgae(mainFrame,"Compra concluída\nVerifique estoque para conferir", "ok");
-        System.out.println("Comprado irmão!");
     }
 
     private void limparCampos(){
@@ -115,15 +112,5 @@ public class PainelComprar extends JPanel implements DialogMessageHelper {
         entradaPreco.setText("") ;
         entradaQnt.setText("");
     }
-
-    /*private void dialogMessgae(String msg, String classe){
-        if(classe.equals("erro")){
-            JOptionPane.showMessageDialog(mainFrame,msg,"Erro", JOptionPane.ERROR_MESSAGE);
-        } else if(classe.equals("info")){
-            JOptionPane.showMessageDialog(mainFrame,msg,"Informação", JOptionPane.WARNING_MESSAGE);
-        } else if(classe.equals("ok")){
-            JOptionPane.showMessageDialog(mainFrame,msg,"Tudo certo", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }*/
 
 }

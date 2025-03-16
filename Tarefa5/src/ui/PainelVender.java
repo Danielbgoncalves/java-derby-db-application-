@@ -83,7 +83,6 @@ public class PainelVender extends JPanel implements DialogMessageHelper {
         }
 
         if(id < 1 || qnt < 1 ){
-            System.out.println("Valores inválidos  de id ou qnt");
             DialogMessageHelper.dialogMessgae(mainFrame, "Valores inválidos de id ou qnt", "erro");
             limparCampos();
             return;
@@ -99,7 +98,6 @@ public class PainelVender extends JPanel implements DialogMessageHelper {
         }
 
         limparCampos();
-        System.out.println("Vendido parça!!!");
     }
 
     private void limparCampos(){
@@ -107,7 +105,4 @@ public class PainelVender extends JPanel implements DialogMessageHelper {
         entradaQnt.setText("");
     }
 
-    private void dialogMessgae(String msg){
-        JOptionPane.showMessageDialog(mainFrame,msg);
-    }
 }

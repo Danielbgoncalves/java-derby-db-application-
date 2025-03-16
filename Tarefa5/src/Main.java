@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
         /// -------------- Pra tentar deixar o Swing menos feio --------------
         try {
@@ -20,29 +20,25 @@ public class Main {
             e.printStackTrace();
         }
 
-        /*
-        *
-        * todo parece ter conectado legal ao derby
-        *   falta fazer a compra e a venda ligarem ao ProdutoDAO -> parece ok
-        *   precisa fazer o chamdo de Estoque atualizar a listagem, chat deu uma ideia boa. ->  deu certo
-        *   esta sendo possível vender mais produtos do q o q existe em estoque -> resolvi
-        *   esta sendo possível vender sem o id existir -> parece q consertei
-        *      * ha produtos com quantidade negativa, remover eles -> ok
-        *      * colocar as coixas de diálogo pra erros
-        *
-        *
-        *
-        * */
-
-
         /// -------------- Conexão com o derby --------------
         DBConnection dbConnection= new DBConnection("org.apache.derby.jdbc.EmbeddedDriver");
-        Connection cnn = dbConnection.CreateAndTestConnection(false);
+        Connection cnn = null;
+        try{
+             cnn = dbConnection.CreateAndTestConnection(false);
+        } catch (SQLException e) {
+            System.out.println( e.getMessage());
+            return;
+        }
 
         ProdutoDAO produtoDAO = new ProdutoDAO(cnn);
         produtoDAO.createProductTable();
 
-        dbConnection.testeConnection(cnn);
+        try {
+            dbConnection.testeConnection(cnn);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         /// -------------- Ligação entre componentes do app --------------
 

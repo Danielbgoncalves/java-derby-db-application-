@@ -21,9 +21,8 @@ public class DBConnection {
             Class.forName(drive); // Serve para carregar o driver na memória, mas o que seria isso afinal ? Não sei
             connection = DriverManager.getConnection(connectionURL);
             System.out.println("Connected to database " + dbName);
-        } catch(Throwable e){
-            System.out.println(". . . exception throw:");
-            e.printStackTrace(System.out);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return connection;
     }
@@ -45,7 +44,7 @@ public class DBConnection {
             String error = (sqle).getSQLState();
 
             if(error.equals("42X05")){ // tabela não existe
-                System.out.println("Table does not exist - no more bro");
+                System.out.println("Table does not exist");
                 throw sqle;
             } else if (error.equals("42X14") || error.equals("42821")){ // outros problemas específicos
                 System.out.println("Incorrect table definition. Drop tables and reconfigure");

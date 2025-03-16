@@ -52,7 +52,7 @@ public class ProdutoDAO { // DAO = Data Access Object 👌
                         pstmt.setDouble(2,produto.getPreco());
                         pstmt.setString(3, produto.getDescricao());
                         pstmt.setInt(4, produto.getQuantidade());
-                        pstmt.executeUpdate(); // Executa o código no banco de dados
+                        pstmt.executeUpdate();
                     }
                 }
             } catch(SQLException e){
@@ -106,7 +106,7 @@ public class ProdutoDAO { // DAO = Data Access Object 👌
                             }
                         } else {
                             throw new SQLException("Produto com ID " + id + " não possui unidades o suficiente em estoque\n" +
-                                    "Venda cancelada por completo.");
+                                    "Venda cancelada.");
                         }
                     } else {
                         throw new SQLException("Produto com ID " + id + " não encontrado.");
