@@ -1,13 +1,15 @@
 package ui;
 
 import dao.ProdutoDAO;
+import dialogMessage.DialogMessageHelper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
-public class PainelVender extends JPanel {
+public class PainelVender extends JPanel implements DialogMessageHelper {
     private ProdutoDAO produtoDAO;
+    private JFrame mainFrame;
 
     private JLabel painelLabel = new JLabel("Venda Produtos na OLX JAVAlino");
     private JLabel idVenda = new JLabel("Id do produto a ser vendido");
@@ -21,7 +23,8 @@ public class PainelVender extends JPanel {
     private JButton btnEstoque = new JButton("Ver seu estoque");
 
 
-    public PainelVender(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO ){
+    public PainelVender(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO, JFrame mainFrame ){
+        this.mainFrame = mainFrame;
         this.produtoDAO = produtoDAO;
         setLayout(null);
 
@@ -74,22 +77,24 @@ public class PainelVender extends JPanel {
             id = Integer.parseInt(entradaId.getText());
             qnt = Integer.parseInt(entradaQnt.getText());
         } catch (NumberFormatException e) {
-            System.out.println("Não foi possível converter o text em inteiro");
-            // fazer função pra mostrar erro de conversao inesperada (meio q é esperada pq eu estou escrevendo sobre ela aqui)
+            DialogMessageHelper.dialogMessgae(mainFrame, "A entrada não é válida", "erro");
+            limparCampos();
+            return;
         }
 
         if(id < 1 || qnt < 1 ){
             System.out.println("Valores inválidos  de id ou qnt");
-            // fazer função pra mostra pop up de erro no valor passado
+            DialogMessageHelper.dialogMessgae(mainFrame, "Valores inválidos de id ou qnt", "erro");
+            limparCampos();
             return;
         }
 
         try{
             produtoDAO.sellProduct(id,qnt);
-            System.out.println("vendido");
+            DialogMessageHelper.dialogMessgae(mainFrame, "Produto vendido", "ok");
         } catch (SQLException e) {
-            System.out.println("Erro ao vender produto \nMensagem: " + e.getMessage());
-            // fazer função pra mostra pop up de erro no SQL
+            DialogMessageHelper.dialogMessgae(mainFrame, e.getMessage(), "erro");
+            limparCampos();
             return;
         }
 
@@ -97,8 +102,12 @@ public class PainelVender extends JPanel {
         System.out.println("Vendido parça!!!");
     }
 
-    public void limparCampos(){
+    private void limparCampos(){
         entradaId.setText("");
         entradaQnt.setText("");
+    }
+
+    private void dialogMessgae(String msg){
+        JOptionPane.showMessageDialog(mainFrame,msg);
     }
 }

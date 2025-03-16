@@ -1,6 +1,7 @@
 package ui;
 
 import dao.ProdutoDAO;
+import dialogMessage.DialogMessageHelper;
 import model.Produto;
 
 import javax.swing.*;
@@ -8,14 +9,17 @@ import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PainelEstoque extends JPanel{
+public class PainelEstoque extends JPanel implements DialogMessageHelper {
+
+    private JFrame mainFrame;
     private JTextArea txtArea;
     private ProdutoDAO produtoDAO;
 
     private JLabel painelLabel = new JLabel("Seu estoque na OLX JAVAlino", SwingConstants.CENTER);
     private JButton btnVoltar = new JButton("Voltar às compras");
 
-    public PainelEstoque(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO){
+    public PainelEstoque(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO, JFrame mainFrame){
+        this.mainFrame= mainFrame;
         this.produtoDAO = produtoDAO;
         setLayout(new BorderLayout());
 
@@ -37,11 +41,12 @@ public class PainelEstoque extends JPanel{
 
     public void getNewerList(){
         txtArea.setText("");
-        System.out.println("Entrou em getNwerList");
+
         ArrayList<Produto> list = new ArrayList<>();
         try{
             list = produtoDAO.listProducts();
         } catch( SQLException e){
+            DialogMessageHelper.dialogMessgae(mainFrame,"Erro ao buscar informações do servidor", "erro");
             System.out.println("Erro ao buscar lista de Produto: " + e.getMessage());
             // função de pop up
         }

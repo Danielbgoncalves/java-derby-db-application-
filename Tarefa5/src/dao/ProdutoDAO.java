@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Produto;
 
@@ -58,7 +57,7 @@ public class ProdutoDAO { // DAO = Data Access Object 👌
                 }
             } catch(SQLException e){
                 System.out.println("Erro ao inserir produto: " + e.getMessage());
-                throw e;
+                throw new SQLException("Ocorreu um erro como banco de dados\nO produto não foi comprado");
             }
         }
 

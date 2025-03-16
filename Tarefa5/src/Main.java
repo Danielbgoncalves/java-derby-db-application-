@@ -27,7 +27,8 @@ public class Main {
         *   precisa fazer o chamdo de Estoque atualizar a listagem, chat deu uma ideia boa. ->  deu certo
         *   esta sendo possível vender mais produtos do q o q existe em estoque -> resolvi
         *   esta sendo possível vender sem o id existir -> parece q consertei
-        *      * ha produtos com quantidade negativa, remover eles
+        *      * ha produtos com quantidade negativa, remover eles -> ok
+        *      * colocar as coixas de diálogo pra erros
         *
         *
         *
@@ -61,13 +62,13 @@ public class Main {
             CardLayout cl = (CardLayout) cards.getLayout();
 
             /// -------------- Painel de Compras --------------
-            PainelComprar painelComprar = new PainelComprar(cl,cards,produtoDAO);
+            PainelComprar painelComprar = new PainelComprar(cl,cards,produtoDAO,mainFrame);
 
             /// -------------- Painel de Vender --------------
-            PainelVender painelVender = new PainelVender(cl,cards, produtoDAO);
+            PainelVender painelVender = new PainelVender(cl,cards, produtoDAO,mainFrame);
 
             /// -------------- Painel de Estoque --------------
-            PainelEstoque painelEstoque = new PainelEstoque(cl,cards,produtoDAO);
+            PainelEstoque painelEstoque = new PainelEstoque(cl,cards,produtoDAO, mainFrame);
 
             /// -------------- Configuração dos cards --------------
             cards.add(painelComprar, "Comprar");

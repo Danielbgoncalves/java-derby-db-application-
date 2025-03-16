@@ -2,6 +2,7 @@ package ui;
 
 import dao.ProdutoDAO;
 import db.*;
+import dialogMessage.DialogMessageHelper;
 import model.Produto;
 
 import javax.swing.*;
@@ -9,8 +10,9 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class PainelComprar extends JPanel{
+public class PainelComprar extends JPanel implements DialogMessageHelper {
     private ProdutoDAO produtoDAO;
+    private JFrame mainFrame;
 
     private JLabel painelLabel = new JLabel("Compre Produtos na OLX JAVAlino");
     private JLabel Nome = new JLabel("Nome");
@@ -27,7 +29,8 @@ public class PainelComprar extends JPanel{
     private JButton btnVendas = new JButton("Ver aba de vendas");
     private JButton btnEstoque = new JButton("Ver seu estoque");
 
-    public PainelComprar(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO){
+    public PainelComprar(CardLayout cl, JPanel cards, ProdutoDAO produtoDAO, JFrame mainFrame){
+        this.mainFrame =mainFrame;
         this.produtoDAO = produtoDAO;
         setLayout(null);
 
@@ -91,23 +94,36 @@ public class PainelComprar extends JPanel{
             Produto p = new Produto(nome, preco, descricao,quantidade);
             produtoDAO.insertProduct(p);
         } catch (NumberFormatException e) {
-            System.out.println("Tipo de dado inválido");
-            // fazer função pra mostra pop up de erro tipo nnumerico esperado
+            DialogMessageHelper.dialogMessgae(mainFrame,"Entrada com formato inválido", "erro");
             return;
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
+            DialogMessageHelper.dialogMessgae(mainFrame, e.getMessage(), "erro");
             // fazer função pra mostra pop up de erro no SQL
             return;
+        } finally {
+            limparCampos();
         }
 
-        limparCampos();
+        DialogMessageHelper.dialogMessgae(mainFrame,"Compra concluída\nVerifique estoque para conferir", "ok");
         System.out.println("Comprado irmão!");
     }
 
-    public void limparCampos(){
+    private void limparCampos(){
         entradaNome.setText("");
         entradaDescricao.setText("");
         entradaPreco.setText("") ;
         entradaQnt.setText("");
     }
+
+    /*private void dialogMessgae(String msg, String classe){
+        if(classe.equals("erro")){
+            JOptionPane.showMessageDialog(mainFrame,msg,"Erro", JOptionPane.ERROR_MESSAGE);
+        } else if(classe.equals("info")){
+            JOptionPane.showMessageDialog(mainFrame,msg,"Informação", JOptionPane.WARNING_MESSAGE);
+        } else if(classe.equals("ok")){
+            JOptionPane.showMessageDialog(mainFrame,msg,"Tudo certo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }*/
+
 }
