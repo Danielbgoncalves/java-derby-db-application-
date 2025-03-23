@@ -46,25 +46,27 @@ public class PainelEstoque extends JPanel implements DialogMessageHelper {
         try{
             list = produtoDAO.listProducts();
         } catch( SQLException e){
-            DialogMessageHelper.dialogMessgae(mainFrame,"Erro ao buscar informações do servidor", "erro");
-            // função de pop up
+            DialogMessageHelper.dialogMessgae(mainFrame,"Erro ao buscar informações do banco de dados", "erro");
         }
 
         if(list.isEmpty()){
-            txtArea.append("""
-                    ===================================================================
-                    \t   No momento não há Produto no estoque,
-                    \t   Compre algum na OLX JAVAlino e o veja no estoque !
-                    \t   Dica: use o id mostrado aqui para te orientar na hora da venda
-　
-                    ===================================================================
-                    """);
+            txtArea.append(emptyMessage());
         } else{
             for(Produto p: list)
                 txtArea.append(p.toString() + "\n");
         }
 
+    }
 
+    public String emptyMessage(){
+        return """
+                    =======================================================================
+                    \t   No momento não há Produto no estoque,
+                    \t   Compre algum na OLX JAVAlino e o veja no estoque !
+                    \t   Dica: use o id mostrado aqui para te orientar na hora da venda
+　
+                    =======================================================================
+                    """;
     }
 
 

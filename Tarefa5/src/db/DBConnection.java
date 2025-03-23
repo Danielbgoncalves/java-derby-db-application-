@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DBConnection {
     String drive;
-    String dbName = "C:\\DB_derby\\Tarefa5";
+    String dbName = "C:\\DB_derby\\OLX-JAVAlino";
     String connectionURL = "jdbc:derby:" + dbName+ ";create=true";
 
     public DBConnection(String drive){
